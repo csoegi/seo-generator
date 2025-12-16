@@ -6,7 +6,6 @@ import OfficialDebuggers from "./_components/debugger";
 import GenerateTags from "./_components/generate-tags";
 import Header from "./_components/header";
 import { previews } from "./_components/preview/previews";
-import Rating from "./_components/rating";
 import SeoForm from "./_components/seo-form";
 import { Settings } from "./_components/settings";
 
@@ -22,7 +21,10 @@ export default function Home() {
           <div className="mt-10">
             <Label className="mb-6">Extras</Label>
             <Settings />
-            <Rating />
+            <a href="template.html" target="_blank">
+              <span className="pointer-events-none flex-1">View Template</span>
+            </a>
+            {/* <Rating /> */}
           </div>
         </div>
         <div>
