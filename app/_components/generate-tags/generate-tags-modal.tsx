@@ -22,11 +22,11 @@ import React from "react";
 import { ComponentSource } from "../meta-tags-source";
 
 export default function GenerateTagsModal({ children }: { children: React.ReactNode }) {
-  const { title, description, url, imageFile } = useSeoFormStore();
+  const { siteName, title, description, url, imageFile, ampUrl, registerUrl, loginUrl } = useSeoFormStore();
 
-  const htmlCode = getMetaTagsCode({ title, description, url, imageFile });
-  const nextCode = getNextJsMetadataCode({ title, description, url, imageFile });
-  const astroCode = getAstroMetadataCode({ title, description, url, imageFile });
+  const htmlCode = getMetaTagsCode({ siteName, title, description, url, imageFile, ampUrl, registerUrl, loginUrl });
+  const nextCode = getNextJsMetadataCode({ siteName, title, description, url, imageFile, ampUrl, registerUrl, loginUrl });
+  const astroCode = getAstroMetadataCode({ siteName, title, description, url, imageFile, ampUrl, registerUrl, loginUrl });
 
   return (
     <Dialog>

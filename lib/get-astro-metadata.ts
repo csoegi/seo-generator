@@ -2,7 +2,7 @@ import { SeoFormState } from "@/store/use-seo-form-store";
 
 type MetaTagsProps = Omit<
   SeoFormState,
-  "setTitle" | "setDescription" | "setImageFile" | "setUrl" | "getIsFormComplete"
+  "setSiteName" | "setTitle" | "setDescription" | "setImageFile" | "setUrl" | "setAmpUrl" | "setRegisterUrl" | "setLoginUrl" | "getIsFormComplete"
 >;
 
 export function getAstroMetadataCode(props: MetaTagsProps) {

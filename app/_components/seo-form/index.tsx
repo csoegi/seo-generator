@@ -3,7 +3,6 @@ import KeyCommand from "@/components/key-command";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { getHostnameFromUrl } from "@/lib/get-hostname-from-url";
 import { useSeoFormStore } from "@/store/use-seo-form-store";
 import { useSettingsStore } from "@/store/use-settings-store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,11 +13,23 @@ import GenerateTagsModal from "../generate-tags/generate-tags-modal";
 import FormLabelWithCounter from "./form-label-with-counter";
 
 export default function SeoForm() {
-  const { title, setTitle, description, setDescription, imageFile, url, setUrl = () => {} } = useSeoFormStore();
+  const { 
+    title, setTitle, 
+    description, setDescription, 
+    siteName, setSiteName, 
+    imageFile, 
+    url, setUrl, 
+    ampUrl, setAmpUrl, 
+    registerUrl, setRegisterUrl, 
+    loginUrl, setLoginUrl = () => {} 
+  } = useSeoFormStore();
 
   const { titleMaxLength, descriptionMaxLength, isFileImage } = useSettingsStore();
 
   const seoFormSchema = z.object({
+    siteName: z
+      .string()
+      .min(1, "Site name is required"),
     title: z
       .string()
       .min(1, "Title is required")
@@ -29,10 +40,15 @@ export default function SeoForm() {
       .optional(),
     imageFile: z.any().optional(),
     url: z.url().optional(),
+    ampUrl: z.url().optional(),
+    registerUrl: z.url().optional(),
+    loginUrl: z.url().optional(),
   });
+
   const seoForm = useForm({
     resolver: zodResolver(seoFormSchema),
     defaultValues: {
+      siteName,
       title,
       description,
       imageFile,
@@ -47,6 +63,28 @@ export default function SeoForm() {
     <div className="mt-6">
       <Form {...seoForm}>
         <form onSubmit={seoForm.handleSubmit(onSubmit)} className="space-y-10">
+          <FormField
+            control={seoForm.control}
+            name={"siteName"}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Site Name</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={siteName}
+                    onChange={(event) => { setSiteName(event.target.value); setTitle(event.target.value)}}
+                    className="text-lg"
+                  />
+                </FormControl>
+                <FormDescription>
+                  Site Name is required.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={seoForm.control}
             name={"title"}
@@ -107,7 +145,7 @@ export default function SeoForm() {
               </FormItem>
             )}
           />
-
+          
           <FormField
             control={seoForm.control}
             name="imageFile"
@@ -133,7 +171,7 @@ export default function SeoForm() {
               <FormItem>
                 <div className="*:not-first:mt-2">
                   <FormLabel>
-                    Page URL <span className="text-muted-foreground text-sm font-normal">(optional)</span>
+                    Page URL <span className="text-muted-foreground text-sm font-normal"></span>
                   </FormLabel>
                   <FormControl>
                     <div className="shadow-xs flex rounded-md">
@@ -144,7 +182,7 @@ export default function SeoForm() {
                         {...field}
                         className="-ms-px rounded-s-none shadow-none"
                         type="text"
-                        placeholder={getHostnameFromUrl(url!)!}
+                        placeholder={url!}
                         onChange={(event) => setUrl(event.target.value)}
                       />
                     </div>
@@ -152,6 +190,102 @@ export default function SeoForm() {
                 </div>
                 <FormDescription>
                   The URL of the page. This is used by search engines to index your page correctly.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name={"ampUrl"}
+            render={({ field }) => (
+              <FormItem>
+                <div className="*:not-first:mt-2">
+                  <FormLabel>
+                    Mobile Page URL <span className="text-muted-foreground text-sm font-normal"></span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="shadow-xs flex rounded-md">
+                      <span className="border-input bg-background text-muted-foreground -z-10 inline-flex items-center rounded-s-md border px-3 text-sm">
+                        https://
+                      </span>
+                      <Input
+                        {...field}
+                        className="-ms-px rounded-s-none shadow-none"
+                        type="text"
+                        placeholder={ampUrl!}
+                        onChange={(event) => setAmpUrl(event.target.value)}
+                      />
+                    </div>
+                  </FormControl>
+                </div>
+                <FormDescription>
+                  The URL of the mobile page. This is used by search engines to index your page correctly.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name={"registerUrl"}
+            render={({ field }) => (
+              <FormItem>
+                <div className="*:not-first:mt-2">
+                  <FormLabel>
+                    Register Link URL <span className="text-muted-foreground text-sm font-normal"></span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="shadow-xs flex rounded-md">
+                      <span className="border-input bg-background text-muted-foreground -z-10 inline-flex items-center rounded-s-md border px-3 text-sm">
+                        https://
+                      </span>
+                      <Input
+                        {...field}
+                        className="-ms-px rounded-s-none shadow-none"
+                        type="text"
+                        placeholder={registerUrl!}
+                        onChange={(event) => setRegisterUrl(event.target.value)}
+                      />
+                    </div>
+                  </FormControl>
+                </div>
+                <FormDescription>
+                  Link URL to register page.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name={"loginUrl"}
+            render={({ field }) => (
+              <FormItem>
+                <div className="*:not-first:mt-2">
+                  <FormLabel>
+                    Login Link URL <span className="text-muted-foreground text-sm font-normal"></span>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="shadow-xs flex rounded-md">
+                      <span className="border-input bg-background text-muted-foreground -z-10 inline-flex items-center rounded-s-md border px-3 text-sm">
+                        https://
+                      </span>
+                      <Input
+                        {...field}
+                        className="-ms-px rounded-s-none shadow-none"
+                        type="text"
+                        placeholder={loginUrl!}
+                        onChange={(event) => setLoginUrl(event.target.value)}
+                      />
+                    </div>
+                  </FormControl>
+                </div>
+                <FormDescription>
+                  Link URL to login page.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
