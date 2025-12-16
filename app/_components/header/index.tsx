@@ -1,6 +1,5 @@
 import { FaviconExample } from "@/components/favicon";
 import TextType from "@/components/TextType";
-import GitHubRepository from "./github-repository";
 
 export default function Header() {
   return (
@@ -21,7 +20,7 @@ export default function Header() {
       <nav>
         <ul>
           <li>
-            <GitHubRepository />
+            {/* <GitHubRepository /> */}
           </li>
         </ul>
       </nav>
