@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const websiteUrl = "https://seo-generator.vercel.app/";
+const websiteUrl = "https://seo-tunnel-generator.vercel.app/";
 export const metadata: Metadata = {
   title: "SEO Generator - Create SEO metadata for your web pages",
   description:
