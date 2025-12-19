@@ -2,17 +2,27 @@ import { SeoFormState } from "@/store/use-seo-form-store";
 
 type MetaTagsProps = Omit<
   SeoFormState,
-  "setSiteName" | "setTitle" | "setDescription" | "setImageFile" | "setUrl" | "setAmpUrl" | "setRegisterUrl" | "setLoginUrl" | "getIsFormComplete"
+  "setSiteName" | "setTitle" | "setDescription" | "setIconImageFile" | "setLogoImageFile" | "setImageFile" | "setUrl" | "setAmpUrl" | "setRegisterUrl" | "setLoginUrl" | "getIsFormComplete"
 >;
 export function getMetaTagsCode(props: MetaTagsProps) {
+  const vercelBlobBaseUrl = `${process.env.NEXT_PUBLIC_BLOB_BASE_URL}`;
+
+  const defaultIconUrl = `${vercelBlobBaseUrl + process.env.NEXT_PUBLIC_DEFAULT_ICON}`;
+  const defaultLogoUrl = `${vercelBlobBaseUrl + process.env.NEXT_PUBLIC_DEFAULT_LOGO}`;
+  const defaultBannerUrl = `${vercelBlobBaseUrl + process.env.NEXT_PUBLIC_DEFAULT_BANNER}`;
+
+  const iconImageUrl = `${props.iconImageFile ? props.iconImageFile.preview : defaultIconUrl}`;
+  const logoImageUrl = `${props.logoImageFile ? props.logoImageFile.preview : defaultLogoUrl}`;
+  const bannerImageUrl = `${props.imageFile ? props.imageFile.preview : defaultBannerUrl}`;
+  
   return `
     <!DOCTYPE html>
     <html lang="en-US">
     <head>
         <!-- Charset & Viewport -->
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
         <!-- Primary Meta Tags -->
         <title>${props.title}</title>
@@ -21,7 +31,7 @@ export function getMetaTagsCode(props: MetaTagsProps) {
 
         <!-- Canonical -->
         ${props.url ? `<link rel="canonical" href="${props.url}" />` : ""}
-        ${props.ampUrl ? `<link rel="amphtml" href="${props.ampUrl}` :"" }
+        ${props.ampUrl ? `<link rel="amphtml" href="${props.ampUrl}" />` :"" }
 
         <!-- Robots -->
         <meta name="robots" content="index, follow" />
@@ -34,7 +44,7 @@ export function getMetaTagsCode(props: MetaTagsProps) {
         ${props.url ? `<meta property="og:url" content="${props.url}" />` : ""}
         <meta property="og:title" content="${props.title}" />
         <meta property="og:description" content="${props.description}" />
-        <meta property="og:image" content="${props.imageFile ? props.imageFile.file.name : ""}" />
+        <meta property="og:image" content="${bannerImageUrl}" />
         <meta property="og:image:alt" content="${props.title}" />
         <meta property="og:site_name" content="${props.siteName}" />
 
@@ -43,32 +53,59 @@ export function getMetaTagsCode(props: MetaTagsProps) {
         ${props.url ? `<meta name="twitter:url" content="${props.url}" />` : ""}
         <meta name="twitter:title" content="${props.title}" />
         <meta name="twitter:description" content="${props.description}" />
-        <meta name="twitter:image" content="${props.imageFile ? props.imageFile.file.name : "" }" />
+        <meta name="twitter:image" content="${bannerImageUrl}" />
         <meta name="twitter:image:alt" content="${props.title}" />
+
+        <!-- Schema.org -->
+        <meta itemprop="name" content="${props.title}" />
+        <meta itemprop="url" content="${props.url}" />
+        <meta itemprop="description" content="${props.description}" />
+        <meta itemprop="thumbnailUrl" content="${bannerImageUrl}" />
+        <link rel="image_src" href="${bannerImageUrl}" />
+        <meta itemprop="image" content="${bannerImageUrl}" />
+        
+        <!-- Icon -->
+        <link rel="icon" type="image/x-icon" href="${iconImageUrl}" />
 
         <!-- Language -->
         <meta http-equiv="content-language" content="en" />
-        
-        <link id="showcase-cta" rel="stylesheet" type="text/css" media="all" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/style-main.css">
-        <link id="showcase-cta-google-fonts" rel="stylesheet" type="text/css" media="all" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/css">
-        <link rel="stylesheet" id="astra-theme-css-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/main.min.css" media="all">
-        <link rel="stylesheet" id="astra-theme-css-inlinecss" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/astra-theme-inline.css">
-        <link rel="stylesheet" id="hfe-widgets-style-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/frontend.css" media="all">
-        <link rel="stylesheet" id="wp-block-library-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/style.min.css" media="all">
-        <link rel="stylesheet" id="photoswipe-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/photoswipe.min.css" media="all">
-        <link rel="stylesheet" id="photoswipe-default-skin-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/default-skin.min.css" media="all">
-        <link rel="stylesheet" id="woocommerce-layout-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/woocommerce-layout-grid.min.css" media="all">
-        <link rel="stylesheet" id="woocommerce-smallscreen-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/woocommerce-smallscreen-grid.min.css" media="only screen and (max-width: 921px)">
-        <link rel="stylesheet" id="woocommerce-general-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/woocommerce-grid.min.css" media="all">
-        <link rel="stylesheet" id="sticky-add-to-cart-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/sticky-add-to-cart.min.css" media="all">
-        <link rel="stylesheet" id="hfe-style-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/header-footer-elementor.css" media="all">
-        <link rel="stylesheet" id="elementor-frontend-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/frontend.min.css" media="all">
-        <link rel="stylesheet" id="elementor-post-4-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/post-4.css" media="all">
-        <link rel="stylesheet" id="moderncart-cart-css-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/cart.css" media="all">
-        <link rel="stylesheet" id="dashicons-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/dashicons.min.css" media="all">
-        <link rel="stylesheet" id="cfvsw_swatches_product-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/swatches.css" media="all">
+                        
+        <link id="showcase-cta" rel="stylesheet" type="text/css" media="all" href="${vercelBlobBaseUrl}/assets/css/style-main.css">
+        <link id="showcase-cta-google-fonts" rel="stylesheet" type="text/css" media="all" href="${vercelBlobBaseUrl}/assets/css/css">
+        <link rel="stylesheet" id="astra-theme-css-css" href="${vercelBlobBaseUrl}/assets/css/main.min.css" media="all">
+        <link rel="stylesheet" id="astra-theme-css-inlinecss" href="${vercelBlobBaseUrl}/assets/css/astra-theme-inline.css">
+        <link rel="stylesheet" id="hfe-widgets-style-css" href="${vercelBlobBaseUrl}/assets/css/frontend.css" media="all">
+        <link rel="stylesheet" id="wp-block-library-css" href="${vercelBlobBaseUrl}/assets/css/style.min.css" media="all">
+        <link rel="stylesheet" id="photoswipe-css" href="${vercelBlobBaseUrl}/assets/css/photoswipe.min.css" media="all">
+        <link rel="stylesheet" id="photoswipe-default-skin-css" href="${vercelBlobBaseUrl}/assets/css/default-skin.min.css" media="all">
+        <link rel="stylesheet" id="woocommerce-layout-css" href="${vercelBlobBaseUrl}/assets/css/woocommerce-layout-grid.min.css" media="all">
+        <link rel="stylesheet" id="woocommerce-smallscreen-css" href="${vercelBlobBaseUrl}/assets/css/woocommerce-smallscreen-grid.min.css" media="only screen and (max-width: 921px)">
+        <link rel="stylesheet" id="woocommerce-general-css" href="${vercelBlobBaseUrl}/assets/css/woocommerce-grid.min.css" media="all">
+        <link rel="stylesheet" id="sticky-add-to-cart-css" href="${vercelBlobBaseUrl}/assets/css/sticky-add-to-cart.min.css" media="all">
+        <link rel="stylesheet" id="hfe-style-css" href="${vercelBlobBaseUrl}/assets/css/header-footer-elementor.css" media="all">
+        <link rel="stylesheet" id="elementor-frontend-css" href="${vercelBlobBaseUrl}/assets/css/frontend.min.css" media="all">
+        <link rel="stylesheet" id="elementor-post-4-css" href="${vercelBlobBaseUrl}/assets/css/post-4.css" media="all">
+        <link rel="stylesheet" id="moderncart-cart-css-css" href="${vercelBlobBaseUrl}/assets/css/cart.css" media="all">
+        <link rel="stylesheet" id="dashicons-css" href="${vercelBlobBaseUrl}/assets/css/dashicons.min.css" media="all">
+        <link rel="stylesheet" id="cfvsw_swatches_product-css" href="${vercelBlobBaseUrl}/assets/css/swatches.css" media="all">
         <link id="google-fonts-domain" rel="preconnect" href="https://fonts.gstatic.com/">
-        <link id="google-fonts-url" rel="stylesheet" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/css2">
+        <link id="google-fonts-url" rel="stylesheet" href="${vercelBlobBaseUrl}/assets/css/css2">
+
+        <!-- Redirect to mobile page -->
+        <script type="text/javascript">
+            (function() {
+                var mobile_url = '${props.ampUrl}'; 
+                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+                // Check for common mobile keywords (iOS, Android, BlackBerry, etc.)
+                if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|operamini/i.test(userAgent)) {
+                // Check that the user is not already on the mobile site to prevent redirect loops
+                if (window.location.href.indexOf(mobile_url) === -1) {
+                    window.location.href = mobile_url;
+                    }
+                }
+            })();
+        </script>
     </head>
 
     <body class="wp-singular product-template-default single single-product postid-187 wp-custom-logo wp-embed-responsive wp-theme-astra theme-astra woocommerce woocommerce-page woocommerce-demo-store woocommerce-js ehf-template-astra ehf-stylesheet-astra cfvsw-label-none cfvsw-product-page ast-desktop ast-plain-container ast-no-sidebar astra-4.11.13 ast-blog-single-style-1 ast-custom-post-type ast-single-post ast-inherit-site-logo-transparent ast-hfb-header ast-normal-title-enabled elementor-default elementor-kit-4"
@@ -103,11 +140,11 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                     <div class="site-header-primary-section-center site-header-section ast-flex ast-grid-section-center">
                                         <div class="ast-builder-layout-element ast-flex site-header-focus-item" data-section="title_tagline">
                                             <div class="site-branding ast-site-identity" itemtype="https://schema.org/Organization" itemscope="itemscope">
-                                                <span class="site-logo-img">
-                                          <a href="#" class="custom-logo-link" rel="home">
-                                          <img width="96" height="50" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/logo-01.svg" class="custom-logo" alt="${props.siteName}" decoding="async" hidden>
-                                          </a>
-                                        </span>
+                                                <span>
+                                                    <a href="#" rel="home">
+                                                        <img width="200" height="60" src="${logoImageUrl}" alt="[SITE_NAME]" decoding="async">
+                                                    </a>
+                                                </span>	
                                             </div>
                                             <!-- .site-branding -->
                                         </div>
@@ -179,7 +216,7 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                 <div class="site-header-primary-section-center site-header-section ast-flex ast-grid-section-center">
                                     <div class="ast-builder-layout-element ast-flex site-header-focus-item" data-section="title_tagline">
                                         <div class="site-branding ast-site-identity" itemtype="https://schema.org/Organization" itemscope="itemscope">
-                                            <span class="site-logo-img"><a href="#" class="custom-logo-link" rel="home"><img width="96" height="50" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/logo-01.svg" class="custom-logo" alt="${props.siteName}" decoding="async"></a></span>
+                                            <span class="site-logo-img"><a href="#" class="custom-logo-link" rel="home"><img width="96" height="50" src="${vercelBlobBaseUrl}/assets/css/logo-01.svg" class="custom-logo" alt="${props.siteName}" decoding="async"></a></span>
                                         </div>
                                         <!-- .site-branding -->
                                     </div>
@@ -221,28 +258,28 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                     <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out;">
                                         <a href="#?customize=template#" role="button" class="woocommerce-product-gallery__trigger" aria-haspopup="dialog" aria-controls="photoswipe-fullscreen-dialog" aria-label="View full-screen image gallery"><span aria-hidden="true">🔍</span></a>
                                         <div class="woocommerce-product-gallery__wrapper">
-                                            <div data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" data-thumb-alt="${props.siteName}" data-thumb-srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 100w, 
-                                          https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 150w" data-thumb-sizes="(max-width: 100px) 100vw, 100px" class="woocommerce-product-gallery__image" data-o_data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg"
+                                            <div data-thumb="${bannerImageUrl}" data-thumb-alt="${props.siteName}" data-thumb-srcset="${bannerImageUrl} 100w, 
+                                            ${bannerImageUrl} 150w" data-thumb-sizes="(max-width: 100px) 100vw, 100px" class="woocommerce-product-gallery__image" data-o_data-thumb="${bannerImageUrl}"
                                             style="position: relative; overflow: hidden;">
-                                                <a href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" data-o_href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg">
-                                                    <img fetchpriority="high" width="600" height="731" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="wp-post-image" alt="img-05-a-white" data-caption="" data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg"
-                                                    data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" data-large_image_width="960" data-large_image_height="1170" decoding="async" srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 300w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 600px) 100vw, 600px" data-o_src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg"
-                                                    data-o_height="731" data-o_width="600" data-o_srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 300w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w, 
-                                        https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" data-o_sizes="(max-width: 600px) 100vw, 600px" data-o_title="" title="img-05-a-white" data-o_data-caption="" data-o_alt="${props.siteName}"
-                                                    data-o_data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" data-o_data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg"
+                                                <a href="${bannerImageUrl}" data-o_href="${bannerImageUrl}">
+                                                    <img fetchpriority="high" width="600" height="731" src="${bannerImageUrl}" class="wp-post-image" alt="img-05-a-white" data-caption="" data-src="${bannerImageUrl}"
+                                                    data-large_image="${bannerImageUrl}" data-large_image_width="960" data-large_image_height="1170" decoding="async" srcset="${bannerImageUrl} 600w, 
+                                                    ${bannerImageUrl} 246w, 
+                                                    ${bannerImageUrl} 840w, 
+                                                    ${bannerImageUrl} 768w, 
+                                                    ${bannerImageUrl} 300w, 
+                                                    ${bannerImageUrl} 400w, 
+                                                    ${bannerImageUrl} 960w" sizes="(max-width: 600px) 100vw, 600px" data-o_src="${bannerImageUrl}"
+                                                                data-o_height="731" data-o_width="600" data-o_srcset="${bannerImageUrl} 600w, 
+                                                    ${bannerImageUrl} 246w, 
+                                                    ${bannerImageUrl} 840w, 
+                                                    ${bannerImageUrl} 768w, 
+                                                    ${bannerImageUrl} 300w, 
+                                                    ${bannerImageUrl} 400w, 
+                                                    ${bannerImageUrl} 960w" data-o_sizes="(max-width: 600px) 100vw, 600px" data-o_title="" title="img-05-a-white" data-o_data-caption="" data-o_alt="${props.siteName}"
+                                                    data-o_data-src="${bannerImageUrl}" data-o_data-large_image="${bannerImageUrl}"
                                                     data-o_data-large_image_width="960" data-o_data-large_image_height="1170"></a>
-                                                <img alt="${props.siteName}" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="zoomImg" style="position: absolute; top: -259.2px; left: -323.1px; opacity: 0; width: 960px; height: 1170px; border: none; max-width: none; max-height: none;"
+                                                <img alt="${props.siteName}" src="${bannerImageUrl}" class="zoomImg" style="position: absolute; top: -259.2px; left: -323.1px; opacity: 0; width: 960px; height: 1170px; border: none; max-width: none; max-height: none;"
                                                 aria-hidden="true"></div>
                                         </div>
                                     </div>
@@ -435,12 +472,12 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                             <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                                 <div class="astra-shop-thumbnail-wrap">
                                                     <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                                        <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                                        <img width="300" height="366" src="${bannerImageUrl}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="${bannerImageUrl} 400w,
+                                                        ${bannerImageUrl} 246w, 
+                                                        ${bannerImageUrl} 840w, 
+                                                        ${bannerImageUrl} 768w, 
+                                                        ${bannerImageUrl} 600w, 
+                                                        ${bannerImageUrl} 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                                     <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                                         <span class="ast-card-action-tooltip"> Add to cart </span>
                                                         <span class="ahfb-svg-iconset">
@@ -464,12 +501,12 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                             <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                                 <div class="astra-shop-thumbnail-wrap">
                                                     <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                                        <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                                        <img width="300" height="366" src="${bannerImageUrl}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="${bannerImageUrl} 400w,
+                                                        ${bannerImageUrl} 246w, 
+                                                        ${bannerImageUrl} 840w, 
+                                                        ${bannerImageUrl} 768w, 
+                                                        ${bannerImageUrl} 600w, 
+                                                        ${bannerImageUrl} 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                                     <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                                         <span class="ast-card-action-tooltip"> Add to cart </span>
                                                         <span class="ahfb-svg-iconset">
@@ -493,12 +530,12 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                             <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                                 <div class="astra-shop-thumbnail-wrap">
                                                     <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                                        <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                                        <img width="300" height="366" src="${bannerImageUrl}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="${bannerImageUrl} 400w,
+                                                        ${bannerImageUrl} 246w, 
+                                                        ${bannerImageUrl} 840w, 
+                                                        ${bannerImageUrl} 768w, 
+                                                        ${bannerImageUrl} 600w, 
+                                                        ${bannerImageUrl} 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                                     <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                                         <span class="ast-card-action-tooltip"> Add to cart </span>
                                                         <span class="ahfb-svg-iconset">
@@ -522,12 +559,12 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                                             <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                                 <div class="astra-shop-thumbnail-wrap">
                                                     <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                                        <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                              https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                                        <img width="300" height="366" src="${bannerImageUrl}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}" decoding="async" srcset="${bannerImageUrl} 400w,
+                                                        ${bannerImageUrl} 246w, 
+                                                        ${bannerImageUrl} 840w, 
+                                                        ${bannerImageUrl} 768w, 
+                                                        ${bannerImageUrl} 600w, 
+                                                        ${bannerImageUrl} 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                                     <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                                         <span class="ast-card-action-tooltip"> Add to cart </span>
                                                         <span class="ahfb-svg-iconset">
@@ -683,7 +720,7 @@ export function getMetaTagsCode(props: MetaTagsProps) {
         <div class="ast-sticky-add-to-cart top">
             <div class="ast-container">
                 <div class="ast-sticky-add-to-cart-content">
-                    <div class="ast-sticky-add-to-cart-title-wrap"><img loading="lazy" width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/img-05-a-white-300x366.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}">
+                    <div class="ast-sticky-add-to-cart-title-wrap"><img loading="lazy" width="300" height="366" src="${vercelBlobBaseUrl}/assets/css/img-05-a-white-300x366.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="${props.siteName}">
                         <span
                         class="ast-sticky-add-to-cart-title">${props.siteName}</span>
                     </div>
@@ -735,7 +772,7 @@ export function getMetaTagsCode(props: MetaTagsProps) {
                 </div>
             </div>
         </div>
-        <link rel="stylesheet" id="wc-blocks-style-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/wc-blocks.css" media="all">
+        <link rel="stylesheet" id="wc-blocks-style-css" href="${vercelBlobBaseUrl}/assets/css/wc-blocks.css" media="all">
     </body>
 
     </html>

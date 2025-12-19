@@ -7,15 +7,20 @@ import { useSeoFormStore } from "@/store/use-seo-form-store";
 import Image from "next/image";
 import { Input } from "./ui/input";
 
-export default function FileUploader(props: React.ComponentProps<"input">) {
+export default function FileUploader(props: React.ComponentProps<"input">) 
+{
+  //DEBUG FormField name (iconImageFile/logoImageFile/imageFile)
+  //console.log(props.name);
+  const formFieldName = props.name;
   const maxSizeMB = 5;
   const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
 
-  const { setImageFile } = useSeoFormStore();
+  const { setIconImageFile, setLogoImageFile, setImageFile } = useSeoFormStore();
   const [
     { files, isDragging, errors },
     { handleDragEnter, handleDragLeave, handleDragOver, handleDrop, openFileDialog, removeFile, getInputProps },
   ] = useFileUpload({
+    formFieldName: formFieldName,
     accept: "image/*",
     maxSize,
   });
@@ -67,7 +72,16 @@ export default function FileUploader(props: React.ComponentProps<"input">) {
               type="button"
               className="focus-visible:border-ring focus-visible:ring-ring/50 z-50 flex size-8 cursor-pointer items-center justify-center rounded-full bg-black/60 text-white outline-none transition-[color,box-shadow] hover:bg-black/80 focus-visible:ring-[3px]"
               onClick={() => {
-                setImageFile({} as FileWithPreview);
+                if(props.name == "iconImageFile") {
+                  setIconImageFile({} as FileWithPreview);
+                }
+                else if(props.name == "logoImageFile") {
+                  setLogoImageFile({} as FileWithPreview);
+                }
+                else if(props.name == "imageFile") {
+                  setImageFile({} as FileWithPreview);
+                }
+                
                 removeFile(files[0]?.id);
               }}
               aria-label="Remove image"
@@ -87,12 +101,12 @@ export default function FileUploader(props: React.ComponentProps<"input">) {
 
       <p aria-live="polite" role="region" className="text-muted-foreground mt-1 text-left text-xs">
         Single image uploader w/ max size ∙{" "}
-        <a
+        {/* <a
           href="https://github.com/origin-space/originui/tree/main/docs/use-file-upload.md"
           className="hover:text-foreground underline"
         >
           API
-        </a>
+        </a> */}
       </p>
     </div>
   );

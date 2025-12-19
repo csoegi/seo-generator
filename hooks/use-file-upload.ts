@@ -2,6 +2,7 @@
 
 import { formatBytes } from "@/lib/format-bytes";
 import { useSeoFormStore } from "@/store/use-seo-form-store";
+import { upload } from '@vercel/blob/client';
 import type React from "react";
 import { useCallback, useRef, useState, type ChangeEvent, type DragEvent, type InputHTMLAttributes } from "react";
 
@@ -22,6 +23,7 @@ export type FileWithPreview = {
 };
 
 export type FileUploadOptions = {
+  formFieldName?: string; // iconImageFile|logoImageFile|imageFile
   maxFiles?: number; // Only used when multiple is true. Default is set in useFileUpload.
   maxSize?: number; // in bytes
   accept?: string;
@@ -55,6 +57,7 @@ export type FileUploadActions = {
 
 export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState, FileUploadActions] => {
   const {
+    formFieldName = "",
     maxFiles = Infinity,
     maxSize = Infinity,
     accept = "*",
@@ -64,7 +67,7 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
     onFilesAdded,
   } = options;
 
-  const { setImageFile } = useSeoFormStore();
+  const { setIconImageFile, setLogoImageFile, setImageFile } = useSeoFormStore();
 
   const [state, setState] = useState<FileUploadState>({
     files: initialFiles.map((file) => ({
@@ -153,9 +156,9 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
     });
   }, [onFilesChange]);
 
-  const addFiles = useCallback(
-    (newFiles: FileList | File[]) => {
-      if (!newFiles || newFiles.length === 0) return;
+  const addFiles = useCallback(async  (newFiles: FileList | File[]) => {
+      if (!newFiles || newFiles.length === 0) 
+        return;
 
       const newFilesArray = Array.from(newFiles);
       const errors: string[] = [];
@@ -177,7 +180,7 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
 
       const validFiles: FileWithPreview[] = [];
 
-      newFilesArray.forEach((file) => {
+      for (const file of newFilesArray) {
         // Only check for duplicates if multiple files are allowed
         if (multiple) {
           const isDuplicate = state.files.some(
@@ -186,7 +189,7 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
 
           // Skip duplicate files silently
           if (isDuplicate) {
-            return;
+            continue;
           }
         }
 
@@ -197,23 +200,45 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
               ? `Some files exceed the maximum size of ${formatBytes(maxSize)}.`
               : `File exceeds the maximum size of ${formatBytes(maxSize)}.`,
           );
-          return;
+          continue;
         }
 
         const error = validateFile(file);
         if (error) {
           errors.push(error);
-        } else {
+          continue;
+        } 
+        
+        try {
+          // 3. Perform the upload to vercel
+          const newBlob = await upload(`${process.env.NEXT_PUBLIC_IMAGES_PATH||'public'}/${file.name}`, file, {
+            access: 'public',
+            handleUploadUrl: '/api/vercel/upload',
+          });
+
           const newFile: FileWithPreview = {
             file,
             id: generateUniqueId(file),
-            preview: createPreview(file),
+            //preview: createPreview(file), // Original code create a local blob image
+            preview: newBlob.url, // 4. Use the actual Vercel URL as the preview/source
           };
-          setImageFile(newFile); // Update the store with the selected file
-          validFiles.push(newFile);
-        }
-      });
+          
+          console.log(formFieldName);
 
+          if(formFieldName == "iconImageFile")
+            setIconImageFile(newFile);
+          else if (formFieldName == "logoImageFile")
+            setLogoImageFile(newFile);
+          else if (formFieldName == "imageFile")
+            setImageFile(newFile);
+
+          validFiles.push(newFile);
+        } catch (err) {
+          errors.push(`Failed to upload ${file.name}.`);
+          console.error("Vercel Upload Error:", err);
+        }
+      }
+      
       // Only update state if we have valid files to add
       if (validFiles.length > 0) {
         // Call the onFilesAdded callback with the newly added valid files
@@ -242,6 +267,7 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
     },
     [
       state.files,
+      formFieldName,
       maxFiles,
       multiple,
       maxSize,
@@ -255,31 +281,54 @@ export const useFileUpload = (options: FileUploadOptions = {}): [FileUploadState
     ],
   );
 
-  const removeFile = useCallback(
-    (id: string) => {
-      setState((prev) => {
-        const fileToRemove = prev.files.find((file) => file.id === id);
-        if (
-          fileToRemove &&
-          fileToRemove.preview &&
-          fileToRemove.file instanceof File &&
-          fileToRemove.file.type.startsWith("image/")
-        ) {
-          URL.revokeObjectURL(fileToRemove.preview);
+  const removeFile = useCallback(async (id: string) => {
+    // 1. Find the file to be removed from the current state
+    const fileToRemove = state.files.find((f) => f.id === id);
+    
+    if (!fileToRemove) 
+      return;
+
+    const filePathToRemove = fileToRemove.preview;
+    if (filePathToRemove) {
+      // 2. For Vercel Blob URL 'preview' contains the https://...blob.vercel-storage.com URL
+      if (filePathToRemove.startsWith('http')) {
+        try {
+          const response = await fetch(
+            `/api/vercel/delete?url=${encodeURIComponent(filePathToRemove)}`,
+            { method: 'DELETE' }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to delete from server');
+          }
+          
+          console.log(`Deleted from Vercel: ${fileToRemove.file.name}`);
+        } catch (error) {
+          console.error("Vercel deletion error:", error);
+          setState(prev => ({ ...prev, errors: ["Failed to remove file from storage."] }));
+          return;
         }
+      } else {
+        // 3. For a local object URL (blob:...), revoke it to free memory
+        URL.revokeObjectURL(filePathToRemove);
+      }
+    }
 
-        const newFiles = prev.files.filter((file) => file.id !== id);
-        onFilesChange?.(newFiles);
-
-        return {
-          ...prev,
-          files: newFiles,
-          errors: [],
-        };
-      });
-    },
-    [onFilesChange],
-  );
+    // 4. Update local state
+    setState((prev) => {
+      const newFiles = prev.files.filter((file) => file.id !== id);
+      onFilesChange?.(newFiles);
+      
+      console.log("Removed from UI: " + fileToRemove.id);
+      
+      return {
+        ...prev,
+        files: newFiles,
+        errors: [],
+      };
+    });
+  }, [state.files, onFilesChange]);
 
   const clearErrors = useCallback(() => {
     setState((prev) => ({

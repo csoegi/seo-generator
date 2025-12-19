@@ -17,6 +17,8 @@ export default function SeoForm() {
     title, setTitle, 
     description, setDescription, 
     siteName, setSiteName, 
+    iconImageFile, 
+    logoImageFile, 
     imageFile, 
     url, setUrl, 
     ampUrl, setAmpUrl, 
@@ -24,7 +26,7 @@ export default function SeoForm() {
     loginUrl, setLoginUrl = () => {} 
   } = useSeoFormStore();
 
-  const { titleMaxLength, descriptionMaxLength, isFileImage } = useSettingsStore();
+  const { titleMaxLength, descriptionMaxLength, isIconImage, isLogoImage, isFileImage } = useSettingsStore();
 
   const seoFormSchema = z.object({
     siteName: z
@@ -36,8 +38,10 @@ export default function SeoForm() {
       .max(titleMaxLength, `Title must be less than ${titleMaxLength} characters`),
     description: z
       .string()
-      .max(descriptionMaxLength, `Description must be less than ${descriptionMaxLength} characters`)
-      .optional(),
+      .min(1, "Description is required")
+      .max(descriptionMaxLength, `Description must be less than ${descriptionMaxLength} characters`),
+    iconImageFile: z.any().optional(),
+    logoImageFile: z.any().optional(),
     imageFile: z.any().optional(),
     url: z.url().optional(),
     ampUrl: z.url().optional(),
@@ -51,6 +55,8 @@ export default function SeoForm() {
       siteName,
       title,
       description,
+      iconImageFile,
+      logoImageFile,
       imageFile,
     },
   });
@@ -73,7 +79,11 @@ export default function SeoForm() {
                   <Input
                     {...field}
                     value={siteName}
-                    onChange={(event) => { setSiteName(event.target.value); setTitle(event.target.value)}}
+                    onChange={(event) => { 
+                      setSiteName(event.target.value); 
+                      setTitle(event.target.value); 
+                      setUrl(event.target.value.trim().toLocaleLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]+/g, ""));
+                    }}
                     className="text-lg"
                   />
                 </FormControl>
@@ -107,7 +117,7 @@ export default function SeoForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  <KeyCommand>&lt;title /&gt;</KeyCommand> is a required element on any HTML page to be valid markup.
+                  <KeyCommand>&lt;title /&gt;</KeyCommand> is a required.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -138,32 +148,13 @@ export default function SeoForm() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Provide a short description of the page. In some situations, this description is used in the snippet
-                  shown in search results.
+                  Description is required. Provide a short description of the page. 
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           
-          <FormField
-            control={seoForm.control}
-            name="imageFile"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  {isFileImage ? (
-                    <FileUploader {...field} />
-                  ) : (
-                    <Input placeholder="Enter image URL or local Path" {...field} />
-                  )}
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={seoForm.control}
             name={"url"}
@@ -182,6 +173,7 @@ export default function SeoForm() {
                         {...field}
                         className="-ms-px rounded-s-none shadow-none"
                         type="text"
+                        value={url!}
                         placeholder={url!}
                         onChange={(event) => setUrl(event.target.value)}
                       />
@@ -189,7 +181,7 @@ export default function SeoForm() {
                   </FormControl>
                 </div>
                 <FormDescription>
-                  The URL of the page. This is used by search engines to index your page correctly.
+                  The URL of the page used by search engines to index your page.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -221,7 +213,7 @@ export default function SeoForm() {
                   </FormControl>
                 </div>
                 <FormDescription>
-                  The URL of the mobile page. This is used by search engines to index your page correctly.
+                  The URL of the mobile page. 
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -286,6 +278,69 @@ export default function SeoForm() {
                 </div>
                 <FormDescription>
                   Link URL to login page.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name="iconImageFile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Icon Image</FormLabel>
+                <FormControl>
+                  {isIconImage ? (
+                    <FileUploader {...field} />
+                  ) : (
+                    <Input placeholder="Enter image URL or local Path" {...field} />
+                  )}
+                </FormControl>
+                <FormDescription>
+                  Upload icon image, or leave empty to use default icon.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name="logoImageFile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Logo Image</FormLabel>
+                <FormControl>
+                  {isLogoImage ? (
+                    <FileUploader {...field} />
+                  ) : (
+                    <Input placeholder="Enter image URL or local Path" {...field} />
+                  )}
+                </FormControl>
+                <FormDescription>
+                  Upload logo image (180 x 60 px), or leave empty to use default logo.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={seoForm.control}
+            name="imageFile"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Banner Image</FormLabel>
+                <FormControl>
+                  {isFileImage ? (
+                    <FileUploader {...field} />
+                  ) : (
+                    <Input placeholder="Enter image URL or local Path" {...field} />
+                  )}
+                </FormControl>
+                <FormDescription>
+                  Upload banner image (960 x 1170px), or leave empty to use default banner.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
