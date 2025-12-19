@@ -3,44 +3,55 @@
 <html lang="en-US">
    <head>
       <!-- Charset & Viewport -->
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-        <!-- Primary Meta Tags -->
-        <title>[META_TITLE]</title>
-        <meta name="title" content="[META_TITLE]" />
-        <meta name="description" content="[META_DESC]" />
+      <!-- Primary Meta Tags -->
+      <title>[META_TITLE]</title>
+      <meta name="title" content="[META_TITLE]" />
+      <meta name="description" content="[META_DESC]" />
 
-        <!-- Canonical -->
-        <link rel="canonical" href="[PAGE_URL]]" />
-        <link rel="amphtml" href="[AMP_URL]" />
+      <!-- Canonical -->
+      <link rel="canonical" href="[PAGE_URL]" />
+      <link rel="amphtml" href="[MOBILE_PAGE_URL]" />
 
-        <!-- Robots -->
-        <meta name="robots" content="index, follow" />
+      <!-- Robots -->
+      <meta name="robots" content="index, follow" />
 
-        <!-- Theme color -->
-        <meta name="theme-color" content="#ffffff" />
+      <!-- Theme color -->
+      <meta name="theme-color" content="#ffffff" />
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="[PAGE_URL]]" />
-        <meta property="og:title" content="[META_TITLE]" />
-        <meta property="og:description" content="[META_DESC]" />
-        <meta property="og:image" content="[IMAGE_URL]" />
-        <meta property="og:image:alt" content="[META_TITLE]" />
-        <meta property="og:site_name" content="[SITE_NAME]" />
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="[PAGE_URL]" />
+      <meta property="og:title" content="[META_TITLE]" />
+      <meta property="og:description" content="[META_DESC]" />
+      <meta property="og:image" content="[BANNER_IMAGE_URL]" />
+      <meta property="og:image:alt" content="[META_TITLE]" />
+      <meta property="og:site_name" content="[SITE_NAME]" />
 
-        <!-- X (Twitter) -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="[PAGE_URL]]" />
-        <meta name="twitter:title" content="[META_TITLE]" />
-        <meta name="twitter:description" content="[META_DESC]" />
-        <meta name="twitter:image" content="[IMAGE_URL]" />
-        <meta name="twitter:image:alt" content="[META_TITLE]" />
+      <!-- X (Twitter) -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content="[PAGE_URL]" />
+      <meta name="twitter:title" content="[META_TITLE]" />
+      <meta name="twitter:description" content="[META_DESC]" />
+      <meta name="twitter:image" content="[BANNER_IMAGE_URL]" />
+      <meta name="twitter:image:alt" content="[META_TITLE]" />
 
-        <!-- Language -->
-        <meta http-equiv="content-language" content="en" />
+      <!-- Schema.org -->
+      <meta itemprop="name" content="[META_TITLE]" />
+      <meta itemprop="url" content="[PAGE_URL]" />
+      <meta itemprop="description" content="$[META_DESC]" />
+      <meta itemprop="thumbnailUrl" content="[BANNER_IMAGE_URL]" />
+      <meta itemprop="image" content="[BANNER_IMAGE_URL]" />        
+      <link rel="image_src" href="[BANNER_IMAGE_URL]" />
+
+      <!-- Icon -->
+      <link rel="icon" type="image/x-icon" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_icon.webp" />
+
+      <!-- Language -->
+      <meta http-equiv="content-language" content="en" />
       
       <link id="showcase-cta" rel="stylesheet" type="text/css" media="all" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/style-main.css">
       <link id="showcase-cta-google-fonts" rel="stylesheet" type="text/css" media="all" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/css">
@@ -62,6 +73,22 @@
       <link rel="stylesheet" id="cfvsw_swatches_product-css" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/swatches.css" media="all">
       <link id="google-fonts-domain" rel="preconnect" href="https://fonts.gstatic.com/">
       <link id="google-fonts-url" rel="stylesheet" href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/css2">
+      
+      <!-- Redirect to mobile page -->
+      <script type="text/javascript">
+        (function() {
+            var mobile_url = '[MOBILE_PAGE_URL]'; 
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Check for common mobile keywords (iOS, Android, BlackBerry, etc.)
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|operamini/i.test(userAgent)) {
+            // Check that the user is not already on the mobile site to prevent redirect loops
+            if (window.location.href.indexOf(mobile_url) === -1) {
+                window.location.href = mobile_url;
+                }
+            }
+        })();
+      </script>
    </head>
    <body class="wp-singular product-template-default single single-product postid-187 wp-custom-logo wp-embed-responsive wp-theme-astra theme-astra woocommerce woocommerce-page woocommerce-demo-store woocommerce-js ehf-template-astra ehf-stylesheet-astra cfvsw-label-none cfvsw-product-page ast-desktop ast-plain-container ast-no-sidebar astra-4.11.13 ast-blog-single-style-1 ast-custom-post-type ast-single-post ast-inherit-site-logo-transparent ast-hfb-header ast-normal-title-enabled elementor-default elementor-kit-4" style="">
       <div class="hfeed site" id="page">
@@ -93,9 +120,9 @@
                            <div class="site-header-primary-section-center site-header-section ast-flex ast-grid-section-center">
                               <div class="ast-builder-layout-element ast-flex site-header-focus-item" data-section="title_tagline">
                                  <div class="site-branding ast-site-identity" itemtype="https://schema.org/Organization" itemscope="itemscope">
-                                    <span class="site-logo-img">
-                                       <a href="#" class="custom-logo-link" rel="home">
-                                       <img width="96" height="50" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/css/logo-01.svg" class="custom-logo" alt="[SITE_NAME]" decoding="async" hidden>
+                                    <span>
+                                       <a href="#" rel="home">
+                                       <img width="180" height="60" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_logo.png" alt="[SITE_NAME]" decoding="async">
                                        </a>
                                     </span>				
                                  </div>
@@ -211,40 +238,40 @@
                            <div class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out;">
                               <a href="#?customize=template#" role="button" class="woocommerce-product-gallery__trigger" aria-haspopup="dialog" aria-controls="photoswipe-fullscreen-dialog" aria-label="View full-screen image gallery"><span aria-hidden="true">🔍</span></a>
                               <div class="woocommerce-product-gallery__wrapper">
-                                 <div data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
+                                 <div data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
                                       data-thumb-alt="[SITE_NAME]" 
-                                      data-thumb-srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 100w, 
-                                      https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 150w" data-thumb-sizes="(max-width: 100px) 100vw, 100px" class="woocommerce-product-gallery__image" 
-                                      data-o_data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" style="position: relative; overflow: hidden;">
-                                      <a href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
-                                      data-o_href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg">
-                                    <img fetchpriority="high" width="600" height="731" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="wp-post-image" alt="img-05-a-white" data-caption="" 
-                                    data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
-                                    data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
+                                      data-thumb-srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 100w, 
+                                      https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 150w" data-thumb-sizes="(max-width: 100px) 100vw, 100px" class="woocommerce-product-gallery__image" 
+                                      data-o_data-thumb="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" style="position: relative; overflow: hidden;">
+                                      <a href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
+                                      data-o_href="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg">
+                                    <img fetchpriority="high" width="600" height="731" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="wp-post-image" alt="img-05-a-white" data-caption="" 
+                                    data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
+                                    data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
                                     data-large_image_width="960" data-large_image_height="1170" decoding="async" 
-                                    srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 300w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" 
+                                    srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 300w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" 
                                     sizes="(max-width: 600px) 100vw, 600px" 
-                                    data-o_src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
+                                    data-o_src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
                                     data-o_height="731" data-o_width="600" 
-                                    data-o_srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 300w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w, 
-                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" 
+                                    data-o_srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 300w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w, 
+                                    https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" 
                                     data-o_sizes="(max-width: 600px) 100vw, 600px" data-o_title="" title="img-05-a-white" data-o_data-caption="" 
                                     data-o_alt="[SITE_NAME]" 
-                                    data-o_data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
-                                    data-o_data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" 
+                                    data-o_data-src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
+                                    data-o_data-large_image="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" 
                                     data-o_data-large_image_width="960" data-o_data-large_image_height="1170"></a>
-                                    <img alt="[SITE_NAME]" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="zoomImg" style="position: absolute; top: -259.2px; left: -323.1px; opacity: 0; width: 960px; height: 1170px; border: none; max-width: none; max-height: none;" aria-hidden="true"></div>
+                                    <img alt="[SITE_NAME]" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="zoomImg" style="position: absolute; top: -259.2px; left: -323.1px; opacity: 0; width: 960px; height: 1170px; border: none; max-width: none; max-height: none;" aria-hidden="true"></div>
                               </div>
                            </div>
                            <div class="summary entry-summary">
@@ -428,13 +455,13 @@
                                  <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                     <div class="astra-shop-thumbnail-wrap">
                                        <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
-                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
+                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w,
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                        <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                           <span class="ast-card-action-tooltip"> Add to cart </span> 
                                           <span class="ahfb-svg-iconset">
@@ -456,13 +483,13 @@
                                  <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                     <div class="astra-shop-thumbnail-wrap">
                                        <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
-                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
+                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w,
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                        <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                           <span class="ast-card-action-tooltip"> Add to cart </span> 
                                           <span class="ahfb-svg-iconset">
@@ -484,13 +511,13 @@
                                  <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                     <div class="astra-shop-thumbnail-wrap">
                                        <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
-                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
+                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w,
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                        <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                           <span class="ast-card-action-tooltip"> Add to cart </span> 
                                           <span class="ahfb-svg-iconset">
@@ -512,13 +539,13 @@
                                  <li class="ast-article-single ast-woo-product-no-review desktop-align-center tablet-align-center mobile-align-center product type-product post-197 status-publish first instock product_cat-evening-dresses has-post-thumbnail shipping-taxable purchasable product-type-simple">
                                     <div class="astra-shop-thumbnail-wrap">
                                        <a href="#" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
-                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
-                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 400w,
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 246w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 840w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 768w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 600w, 
-                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/slotgacor.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
+                                          <img width="300" height="366" src="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="[SITE_NAME]" decoding="async" 
+                                          srcset="https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 400w,
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 246w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 840w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 768w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 600w, 
+                                           https://7qbb6tluxkzf6t8y.public.blob.vercel-storage.com/assets/images/default_banner.jpg 960w" sizes="(max-width: 300px) 100vw, 300px"></a>
                                        <a href="#" data-quantity="1" class="ast-on-card-button ast-select-options-trigger product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="197" data-product_sku="" aria-label="Add to cart: “Urban Chic Ensemble”" rel="nofollow">
                                           <span class="ast-card-action-tooltip"> Add to cart </span> 
                                           <span class="ahfb-svg-iconset">
