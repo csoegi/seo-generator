@@ -1,6 +1,5 @@
 import { LinkedIn } from "@/components/icons/linkedin";
 import { Label } from "@/components/ui/label";
-import { getHostnameFromUrl } from "@/lib/get-hostname-from-url";
 import { useSeoFormStore } from "@/store/use-seo-form-store";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,7 +28,7 @@ export default function LinkedinPreview() {
         />
         <div className="border-t px-3 py-2.5" title={description}>
           <p>{title}</p>
-          <p className="text-xs uppercase text-neutral-400">{getHostnameFromUrl(url!)}</p>
+          <p className="text-xs uppercase text-neutral-400">{url!}</p>
         </div>
       </Link>
     </div>

@@ -1,7 +1,6 @@
 import { Twitter, XformerlyTwitter } from "@/components/icons/twitter";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { getHostnameFromUrl } from "@/lib/get-hostname-from-url";
 import { cn } from "@/lib/utils";
 import { useSeoFormStore } from "@/store/use-seo-form-store";
 import Image from "next/image";
@@ -30,7 +29,7 @@ export default function TwitterPreview() {
             {title}
           </Badge>
         </div>
-        <span className="mt-1 text-xs text-neutral-400 group-hover:underline">From {getHostnameFromUrl(url!)}</span>
+        <span className="mt-1 text-xs text-neutral-400 group-hover:underline">From {url!}</span>
       </Link>
     </div>
   );

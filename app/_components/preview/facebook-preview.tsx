@@ -1,6 +1,5 @@
 import { Facebook } from "@/components/icons/facebook";
 import { Label } from "@/components/ui/label";
-import { getHostnameFromUrl } from "@/lib/get-hostname-from-url";
 import { useSeoFormStore } from "@/store/use-seo-form-store";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,7 +27,7 @@ export default function FacebookPreview() {
           height={250}
         />
         <div className="border-t px-3 py-2.5">
-          <p className="text-sm uppercase text-neutral-400">{getHostnameFromUrl(url!)}</p>
+          <p className="text-sm uppercase text-neutral-400">{url!}</p>
           <p className="font-semibold">{title}</p>
           <p className="truncate text-sm text-neutral-400">{description}</p>
         </div>
